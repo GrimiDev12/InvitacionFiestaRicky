@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Estás Invitado!</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Montserrat:wght@700&family=Pacifico&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div id="pantalla-inicio">
+        <h1 class="titulo-inicio">¡Tengo algo especial para ti!</h1>
+        <p>Sube el volumen 🔊</p>
+        <button class="btn-abrir" onclick="iniciarInvitacion()">Abrir Invitación</button>
+    </div>
+
+    <div id="contenedor-principal">
+        
+        <div id="cabecera-tematica">
+            <img src="fotos/avion.png" alt="avion" class="avion-papel">
+            <h1 id="artista-tema">RICKY</h1>
+            <h2 id="subtitulo-tema">Cumple 39</h2>
+            <p id="tematica-pequeña">Estas Invitado</p>
+        </div>
+
+        <audio id="musica-fondo" src="BAD BUNNY - BAILE INoLVIDABLE (Video Oficial)  DeBÍ TiRAR MáS FOToS.mp3"></audio>
+
+        <div class="polaroid-wrapper">
+            <img src="fotos/bocina.png" alt="broken" class="broken-icon">
+            <div class="foto-container">
+                <img class="foto activa" src="fotos/foto11ricky.jpeg" alt="Bebé 1">
+                <img class="foto" src="fotos/foto1ricky.jpeg" alt="Bebé 2">
+                <img class="foto" src="fotos/foto10ricky.jpeg" alt="Bebé 3">
+                <img class="foto" src="fotos/foto3ricky.jpeg" alt="Bebé 4">
+                <img class="foto" src="fotos/foto4ricky.jpeg" alt="Bebé 5">
+                <img class="foto" src="fotos/foto5ricky.jpeg" alt="Bebé 7">
+                <img class="foto" src="fotos/foto7ricky.jpeg" alt="Bebé 9">
+                <img class="foto" src="fotos/foto9ricky.jpeg" alt="Bebé 10">
+                <img class="foto" src="fotos/foto2ricky.jpeg" alt="Bebé 11">
+                <img class="foto" src="fotos/Fotofinalricky.jpeg" alt="Actual ">
+            </div>
+            <div class="decor-sillas-l"></div>
+            <div class="decor-palmeras-l"></div>
+            <div class="decor-sillas-r"></div>
+            <div class="decor-cactus-r"></div>
+            <div class="decor-arena-base"></div>
+        </div>
+
+        <div id="detalles-evento">
+            <div class="decor-palmeras-det-l"></div>
+            <div class="decor-cactus-det-l"></div>
+            <div class="decor-sillas-det-l"></div>
+            <div class="decor-altavoces-r"></div>
+            <div class="decor-arena-det-base"></div>
+
+            <div class="detalles-contenido">
+                <h3 id="artista-invita">RICKY</h3>
+                <h4 id="invita-texto">TE INVITA A</h4>
+                <h5 id="lema-invita">¡Acompáñame a celebrar!</h5>
+               <p class="lugar">
+                <span class="detalle-icono-palmera"></span>
+                <strong>Lugar:</strong> Elite Eventos<br>
+                <a href="https://maps.app.goo.gl/n8PY1zQkuTCaZkVe7" target="_blank" class="btn-mapa"> Ver ubicación en mapa</a><br><br>
+                <span class="detalle-icono-calendario"></span>
+                 <strong>Fecha:</strong> Viernes, 3 de Abril<br>
+                 <span class="detalle-icono-reloj"></span>
+                 <strong>Hora:</strong> 7:00 PM
+                </p>
+                
+                <div id="formulario-asistencia">
+                    <input type="text" id="nombre-invitado" placeholder="Tu Nombre y Apellido" required>
+                <div class="grupo-invitados">
+                    <label for="num-invitados">Iré con:</label>
+                    <input type="number" id="num-invitados" value="0" min="0" max="10">
+                    <span>invitados extra</span>
+                </div>
+                <button onclick="enviarWhatsApp()" class="btn-confirmar">
+                    <img src="fotos/avion.png" alt="avion_w" class="avion-boton">Confirmar Asistencia ✓</button>
+                </div>
+            </div>
+        </div>
+
+    
+
+    </div>
+
+    <script>
+     function iniciarInvitacion() {
+            document.getElementById('pantalla-inicio').classList.add('oculto');
+            
+            document.getElementById('contenedor-principal').style.display = 'block';
+
+            let audio = document.getElementById('musica-fondo');
+            
+            let inicioBucle = 73;  
+            let finBucle = 93;    
+            
+            audio.currentTime = inicioBucle;
+            audio.play();
+
+            audio.addEventListener('timeupdate', function() {
+                if (audio.currentTime >= finBucle) {
+                    audio.currentTime = inicioBucle;
+                }
+            });
+
+            iniciarCarrusel();
+        }
+
+        function iniciarCarrusel() {
+            let fotos = document.querySelectorAll('.foto');
+            let indice = 0;
+            
+            let intervalo = setInterval(() => {
+                fotos[indice].classList.remove('activa');
+                indice++;
+                
+                if (indice >= fotos.length) {
+                    clearInterval(intervalo); 
+                    fotos[fotos.length - 1].classList.add('activa'); 
+                    
+                    document.getElementById('detalles-evento').style.opacity = '1';
+                } else {
+                    fotos[indice].classList.add('activa');
+                }
+            }, 2500); 
+        }
+
+        function enviarWhatsApp() {
+            let nombre = document.getElementById('nombre-invitado').value;
+            let invitados = document.getElementById('num-invitados').value;
+
+            if (nombre.trim() === '') {
+                alert('¡Ey! Por favor escribe tu nombre para poder confirmar.');
+                return;
+            }
+            
+            let mensaje = `¡Hola! Soy ${nombre}. Confirmo mi asistencia al cumple 39 de Ricky. Iré con ${invitados} invitado(s) extra.`;
+            
+            let numeroWpp = "528122192780"; 
+            
+            let url = `https://wa.me/${8131295190}?text=${encodeURIComponent(mensaje)}`;
+            
+            window.open(url, '_blank');
+        }
+    </script>
+
+</body>
+</html>
