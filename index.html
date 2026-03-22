@@ -58,7 +58,6 @@
 
             <div class="detalles-contenido">
                 <h3 id="artista-invita">RICKY</h3>
-                <h4 id="invita-texto">TE INVITA A</h4>
                 <h5 id="lema-invita">¡Acompáñame a celebrar!</h5>
                <p class="lugar">
                 <span class="detalle-icono-palmera"></span>
@@ -122,7 +121,16 @@
                     clearInterval(intervalo); 
                     fotos[fotos.length - 1].classList.add('activa'); 
                     
-                    document.getElementById('detalles-evento').style.opacity = '1';
+                    // Mostramos los detalles
+                    let detalles = document.getElementById('detalles-evento');
+                    detalles.style.opacity = '1';
+
+                    // --- NUEVO: AUTO-SCROLL SUAVE HACIA ABAJO ---
+                    // Le damos medio segundo (500ms) para que el div aparezca antes de deslizar
+                    setTimeout(() => {
+                        detalles.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 500);
+
                 } else {
                     fotos[indice].classList.add('activa');
                 }
@@ -140,9 +148,9 @@
             
             let mensaje = `¡Hola! Soy ${nombre}. Confirmo mi asistencia al cumple 39 de Ricky. Iré con ${invitados} invitado(s) extra.`;
             
-            let numeroWpp = "528122192780"; 
+            let numeroWpp = "528131295190"; 
             
-            let url = `https://wa.me/${8131295190}?text=${encodeURIComponent(mensaje)}`;
+            let url = `https://wa.me/${numeroWpp}?text=${encodeURIComponent(mensaje)}`;
             
             window.open(url, '_blank');
         }
